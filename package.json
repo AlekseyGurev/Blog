@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "prop-types": "^15.8.1",
     "react-hook-form": "^7.51.0",
     "react-redux": "^9.1.0",
