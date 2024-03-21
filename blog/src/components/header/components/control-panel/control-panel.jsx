@@ -40,20 +40,25 @@ const ControlPanelContainer = ({ className }) => {
 					<Login>
 						<span>{login}</span>
 						<a onClick={() => dispatch(logOut(session))}>
-							<Icon id="fa-sign-out" size="24px" margin="0 0 0 0"></Icon>
+							<Icon id="fa-sign-out" size="24px" margin="0 0 0 0" />
 						</a>
 					</Login>
 				)}
 			</RightAligned>
 			<RightAligned>
 				<a onClick={() => navigate(-1)}>
-					<Icon id="fa-backward" size="24px" margin="10px 0 0 0"></Icon>
+					<Icon
+						id="fa-backward"
+						size="24px"
+						margin="10px 0 0 0"
+						onClick={() => navigate(-1)}
+					/>
 				</a>
 				<Link to="/post">
-					<Icon id="fa-file-text-o" size="24px" margin="10px 0 0 15px"></Icon>
+					<Icon id="fa-file-text-o" size="24px" margin="10px 0 0 15px" />
 				</Link>
 				<Link to="/users">
-					<Icon id="fa-users" size="24px" margin="10px 0 0 15px"></Icon>
+					<Icon id="fa-users" size="24px" margin="10px 0 0 15px" />
 				</Link>
 			</RightAligned>
 		</div>
