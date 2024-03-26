@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { useServerRequest } from '../../../../hooks';
 import { addCommentAsync } from '../../../../actions';
 
-const CommentsContainer = ({ className, comments, postId, isComment, setIsComment }) => {
+const CommentsContainer = ({ className, comments, postId }) => {
 	const [newComment, setNewComment] = useState('');
 	const dispatch = useDispatch();
 	const userLogin = useSelector(selectUserLogin);
@@ -19,7 +19,6 @@ const CommentsContainer = ({ className, comments, postId, isComment, setIsCommen
 	const onNewCommentAdd = (postId, userLogin, content) => {
 		dispatch(addCommentAsync(postId, content, userLogin, requestServer)).then(() => {
 			setNewComment('');
-			setIsComment(!isComment);
 		});
 	};
 
@@ -46,12 +45,7 @@ const CommentsContainer = ({ className, comments, postId, isComment, setIsCommen
 			)}
 			<ul className="comments-list">
 				{comments.map((comment) => (
-					<Comment
-						key={comment.id}
-						comment={comment}
-						isComment={isComment}
-						setIsComment={setIsComment}
-					/>
+					<Comment key={comment.id} comment={comment} />
 				))}
 			</ul>
 		</div>

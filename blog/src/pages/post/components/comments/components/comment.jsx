@@ -4,18 +4,25 @@ import { selectUserRole } from '../../../../../selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { ROLE } from '../../../../../bff/constants';
 import { useServerRequest } from '../../../../../hooks';
-import { removeCommentAsync } from '../../../../../actions';
+import { openModal, CLOSE_MODAL, removeCommentAsync } from '../../../../../actions';
 
-const CommentContainer = ({ className, comment, setIsComment, isComment }) => {
-	const { id, content, author, publishedAt } = comment;
+const CommentContainer = ({ className, comment }) => {
+	const { id, content, author, publishedAt, postId } = comment;
 	const useRole = useSelector(selectUserRole);
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
 
-	const onDeleteComment = (id) => {
-		dispatch(removeCommentAsync(id, requestServer)).then(() => {
-			setIsComment(!isComment);
-		});
+	const onDeleteComment = (id, postId) => {
+		dispatch(
+			openModal({
+				title: 'Удалить комментарий?',
+				onConfirm: () => {
+					dispatch(CLOSE_MODAL);
+					dispatch(removeCommentAsync(id, postId, requestServer));
+				},
+				onCancel: () => dispatch(CLOSE_MODAL),
+			}),
+		);
 	};
 
 	return (
@@ -37,7 +44,7 @@ const CommentContainer = ({ className, comment, setIsComment, isComment }) => {
 				<div>
 					<a
 						onClick={() => {
-							onDeleteComment(id);
+							onDeleteComment(id, postId);
 						}}
 					>
 						<Icon id="fa-trash-o" size="24px" margin="0 0 0 0" />

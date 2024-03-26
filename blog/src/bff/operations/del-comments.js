@@ -1,8 +1,8 @@
 import { sessions } from '../sessions';
-import { deleteComment } from '../api';
+import { deleteComment, getPost, getComments } from '../api';
 import { ROLE } from '../constants';
 
-export const delComment = async (userSession, commentId) => {
+export const delComment = async (userSession, commentId, postId) => {
 	const accessRoles = [ROLE.ADMIN];
 
 	const access = await sessions.access(userSession, accessRoles);
@@ -16,8 +16,12 @@ export const delComment = async (userSession, commentId) => {
 
 	deleteComment(commentId);
 
+	const post = await getPost(postId);
+
+	const comments = await getComments(postId);
+
 	return {
 		error: null,
-		res: true,
+		res: { ...post, comments },
 	};
 };
