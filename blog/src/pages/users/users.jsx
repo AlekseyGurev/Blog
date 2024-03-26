@@ -2,8 +2,8 @@ import { Content, H2 } from '../../components';
 import { UserRow } from './components';
 import { useServerRequest } from '../../hooks';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { ROLE } from '../../bff/constants';
+import styled from 'styled-components';
 
 const UsersContainer = ({ className }) => {
 	const [users, setUsers] = useState([]);

@@ -5,3 +5,6 @@ export * from './fetch-roles';
 export * from './fetch-users';
 export * from './update-user-role';
 export * from './del-user';
+export * from './fetchPost';
+export * from './add-comment';
+export * from './del-comments';
