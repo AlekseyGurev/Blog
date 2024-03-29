@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import { H2, Icon } from '../../../../components';
+import { useNavigate } from 'react-router-dom';
 
-const PostContentContainer = ({ className, post }) => {
+const PostContentContainer = ({ className, post, onDeletePost }) => {
 	const { id, title, imageUrl, content, publishedAt } = post;
+
+	const navigate = useNavigate();
+
 	return (
 		<div className={className}>
 			<div className="image-container">
@@ -16,14 +20,23 @@ const PostContentContainer = ({ className, post }) => {
 						{publishedAt}
 					</div>
 					<div className="icon-container">
-						<a onClick={() => {}}>
+						<a
+							onClick={() => {
+								navigate(`/post/${id}/edit`);
+							}}
+						>
 							<Icon id="fa-pencil-square-o" size="24px" margin="0 0 0 0" />
 						</a>
-						<a onClick={() => {}}>
+						<a
+							onClick={() => {
+								onDeletePost(id);
+							}}
+						>
 							<Icon id="fa-trash-o" size="22px" margin="0 0 0 0" />
 						</a>
 					</div>
 				</div>
+
 				<p>{content}</p>
 			</div>
 		</div>
@@ -33,6 +46,7 @@ const PostContentContainer = ({ className, post }) => {
 export const PostContent = styled(PostContentContainer)`
 	margin: 40px 0;
 	padding: 0 80px;
+	white-space: pre-line;
 
 	.image-container {
 		float: left;
@@ -46,6 +60,7 @@ export const PostContent = styled(PostContentContainer)`
 	}
 	.content-container {
 		font-size: 18px;
+		min-height: 250px;
 	}
 
 	.icon-container {

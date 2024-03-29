@@ -22,7 +22,7 @@ const ModalContainer = ({ className }) => {
 		<div className={className}>
 			<div className="overlay">
 				<div className="modal">
-					<h3>Удалить комментарий{title}</h3>
+					<h3>{title}</h3>
 					<div className="buttons">
 						<Button onClick={onConfirm}>Да</Button>
 						<Button onClick={onCancel}>Отмена</Button>
