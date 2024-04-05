@@ -11,6 +11,7 @@ import {
 	delComment,
 	editPost,
 	delPost,
+	fetchPosts,
 } from './operations';
 
 export const server = {
@@ -26,4 +27,5 @@ export const server = {
 	delComment,
 	editPost,
 	delPost,
+	fetchPosts,
 };

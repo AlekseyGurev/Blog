@@ -7,7 +7,6 @@ import { sanitizeContent } from './utils/';
 import { savePostAsync } from '../../../../actions';
 import { useServerRequest } from '../../../../hooks';
 import { useState } from 'react';
-import { useLayoutEffect } from 'react';
 
 const PostFormContainer = ({ className, post, onDeletePost, isCreating }) => {
 	const { id, title, imageUrl, content, publishedAt } = post;

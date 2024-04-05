@@ -10,3 +10,4 @@ export * from './add-comment';
 export * from './del-comments';
 export * from './edit-post';
 export * from './del-post';
+export * from './fetch-posts';

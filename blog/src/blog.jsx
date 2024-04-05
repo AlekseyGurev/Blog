@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Header, Footer, Modal } from './components/';
 import { useDispatch } from 'react-redux';
 import { setUser } from './actions';
-import { Authorization, Post, Registration, Users } from './pages';
+import { Authorization, Post, Registration, Users, Posts } from './pages';
 import { useLayoutEffect } from 'react';
 import styled from 'styled-components';
 
@@ -40,11 +40,10 @@ function Blog() {
 			<Header />
 			<Page>
 				<Routes>
-					<Route path="/" element={<div>Главная страница</div>} />
+					<Route path="/" element={<Posts />} />
 					<Route path="/login" element={<Authorization />} />
 					<Route path="/register" element={<Registration />} />
 					<Route path="/users" element={<Users />} />
-					<Route path="/posts" element={<div>Cnanm</div>} />
 					<Route path="/post" element={<Post />} />
 					<Route path="/post/:id" element={<Post />} />
 					<Route path="/post/:id/edit" element={<Post />} />

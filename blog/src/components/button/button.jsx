@@ -13,4 +13,8 @@ export const Button = styled(ButtonContainer)`
 	padding: 10px 0px;
 	border: 1px solid #000000;
 	border-radius: 4px;
+
+	&: hover {
+		cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+	}
 `;
