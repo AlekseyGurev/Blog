@@ -1,7 +1,9 @@
 import { transformPost } from '../transformers';
 
-export const getPosts = (page, limit) =>
-	fetch(`http://localhost:3005/posts?_page=${page}&_per_page=${limit}`)
+export const getPosts = (page, limit, searchPhrase) =>
+	fetch(
+		`http://localhost:3005/posts?title=${searchPhrase}&_page=${page}&_per_page=${limit}`,
+	)
 		.then((Posts) => Posts.json())
 		.then((loadedPosts) => {
 			return (

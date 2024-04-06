@@ -1,7 +1,7 @@
 import { getPosts, getCommentsAll } from '../api';
 
-export const fetchPosts = async (page, limit) => {
-	const posts = await getPosts(page, limit);
+export const fetchPosts = async (page, limit, searchPhrase) => {
+	const posts = await getPosts(page, limit, searchPhrase);
 	const comments = await getCommentsAll();
 
 	const editPosts = posts.data.map((post) => {
