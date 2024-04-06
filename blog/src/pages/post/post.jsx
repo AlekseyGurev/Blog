@@ -3,7 +3,6 @@ import { useParams, useMatch, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { PostContent, Comments, PostForm } from './components';
 import { useServerRequest } from '../../hooks';
-
 import {
 	CLOSE_MODAL,
 	RESET_POST_DATA,
@@ -15,6 +14,9 @@ import { selectPost } from '../../selectors';
 import styled from 'styled-components';
 import { useLayoutEffect } from 'react';
 import { initialPostState } from '../../reducers/post-reducer';
+import { useState } from 'react';
+import { Error } from '../../components';
+import { ERROR } from '../../constants/error';
 
 const PostContainer = ({ className }) => {
 	const dispatch = useDispatch();
@@ -24,6 +26,8 @@ const PostContainer = ({ className }) => {
 	const requestServer = useServerRequest();
 	const post = useSelector(selectPost);
 	const navigate = useNavigate();
+	const [error, setError] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useLayoutEffect(() => {
 		dispatch(RESET_POST_DATA);
@@ -33,7 +37,10 @@ const PostContainer = ({ className }) => {
 		if (isCreating) {
 			return;
 		}
-		dispatch(loadPostAsync(params.id, requestServer));
+		dispatch(loadPostAsync(params.id, requestServer)).then((postData) => {
+			setIsLoading(true);
+			postData.error ? setError(true) : setError(false);
+		});
 	}, [dispatch, params, requestServer]);
 
 	const onDeletePost = (id) => {
@@ -57,21 +64,32 @@ const PostContainer = ({ className }) => {
 		);
 	};
 
+	if (!isLoading) {
+		return;
+	}
+
 	return (
-		<div className={className}>
-			{isCreating || isEditing ? (
-				<PostForm
-					post={isCreating ? initialPostState : post}
-					onDeletePost={onDeletePost}
-					isCreating={isCreating}
-				/>
+		<>
+			{error ? (
+				<Error error={ERROR.PAGE_NOT_EXIST} />
 			) : (
-				<>
-					<PostContent post={post} onDeletePost={onDeletePost} />
-					<Comments comments={post.comments} postId={post.id} />
-				</>
+				// <div>1</div>
+				<div className={className}>
+					{isCreating || isEditing ? (
+						<PostForm
+							post={isCreating ? initialPostState : post}
+							onDeletePost={onDeletePost}
+							isCreating={isCreating}
+						/>
+					) : (
+						<>
+							<PostContent post={post} onDeletePost={onDeletePost} />
+							<Comments comments={post.comments} postId={post.id} />
+						</>
+					)}
+				</div>
 			)}
-		</div>
+		</>
 	);
 };
 

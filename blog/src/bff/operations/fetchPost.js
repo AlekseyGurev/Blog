@@ -1,7 +1,21 @@
 import { getPost, getComments } from '../api';
 
 export const fetchPost = async (id) => {
-	const post = await getPost(id);
+	let post;
+	let error;
+
+	try {
+		post = await getPost(id);
+	} catch (postError) {
+		error = postError;
+	}
+
+	if (error) {
+		return {
+			error,
+			res: null,
+		};
+	}
 
 	const comments = await getComments(id);
 

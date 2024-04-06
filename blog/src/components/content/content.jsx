@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import { H2 } from '../h2/h2';
+import { Error } from '../error/error';
 
 const ContentContainer = ({ children, className, error }) => {
 	return error ? (
 		<div className={className}>
-			<H2>Ошибка</H2>
-			<div>{error}</div>
+			<Error error={error} />
 		</div>
 	) : (
 		children
