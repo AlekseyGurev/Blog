@@ -7,6 +7,7 @@ import { sanitizeContent } from './utils/';
 import { savePostAsync } from '../../../../actions';
 import { useServerRequest } from '../../../../hooks';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const PostFormContainer = ({ className, post, onDeletePost, isCreating }) => {
 	const { id, title, imageUrl, content, publishedAt } = post;
@@ -113,3 +114,9 @@ export const PostForm = styled(PostFormContainer)`
 		border: 1px solid #000000;
 	}
 `;
+
+PostForm.propTypes = {
+	post: PropTypes.object,
+	onDeletePost: PropTypes.func,
+	isCreating: PropTypes.bool,
+};

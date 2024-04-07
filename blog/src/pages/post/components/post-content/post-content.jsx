@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 import { H2, Icon } from '../../../../components';
 import { useNavigate } from 'react-router-dom';
+import { userRoleAccess } from '../../../../bff/utilities';
+import { useSelector } from 'react-redux';
+import { selectUserRole } from '../../../../selectors';
+import PropTypes from 'prop-types';
 
 const PostContentContainer = ({ className, post, onDeletePost }) => {
 	const { id, title, imageUrl, content, publishedAt } = post;
 
 	const navigate = useNavigate();
+	const userRole = useSelector(selectUserRole);
 
 	return (
 		<div className={className}>
@@ -19,22 +24,29 @@ const PostContentContainer = ({ className, post, onDeletePost }) => {
 						<Icon id="fa-calendar-o" size="24px" margin="0 0 0 0" />
 						{publishedAt}
 					</div>
-					<div className="icon-container">
-						<a
-							onClick={() => {
-								navigate(`/post/${id}/edit`);
-							}}
-						>
-							<Icon id="fa-pencil-square-o" size="24px" margin="0 0 0 0" />
-						</a>
-						<a
-							onClick={() => {
-								onDeletePost(id);
-							}}
-						>
-							<Icon id="fa-trash-o" size="22px" margin="0 0 0 0" />
-						</a>
-					</div>
+
+					{userRoleAccess(userRole) && (
+						<div className="icon-container">
+							<a
+								onClick={() => {
+									navigate(`/post/${id}/edit`);
+								}}
+							>
+								<Icon
+									id="fa-pencil-square-o"
+									size="24px"
+									margin="0 0 0 0"
+								/>
+							</a>
+							<a
+								onClick={() => {
+									onDeletePost(id);
+								}}
+							>
+								<Icon id="fa-trash-o" size="22px" margin="0 0 0 0" />
+							</a>
+						</div>
+					)}
 				</div>
 
 				<p>{content}</p>

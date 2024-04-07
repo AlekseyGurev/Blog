@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Icon } from '../../../../components';
+import PropTypes from 'prop-types';
 
 const SpecialPanelContainer = ({ className, publishedAt }) => {
 	return (
@@ -33,3 +34,7 @@ export const SpecialPanel = styled(SpecialPanelContainer)`
 		align-items: center;
 	}
 `;
+
+SpecialPanel.propTypes = {
+	publishedAt: PropTypes.string,
+};

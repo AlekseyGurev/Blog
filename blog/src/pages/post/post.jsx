@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams, useMatch, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { PostContent, Comments, PostForm } from './components';
+import { Content } from '../../components';
 import { useServerRequest } from '../../hooks';
 import {
 	CLOSE_MODAL,
@@ -10,13 +11,14 @@ import {
 	openModal,
 	removePostAsync,
 } from '../../actions';
-import { selectPost } from '../../selectors';
+import { selectPost, selectUserRole } from '../../selectors';
 import styled from 'styled-components';
 import { useLayoutEffect } from 'react';
 import { initialPostState } from '../../reducers/post-reducer';
 import { useState } from 'react';
 import { Error } from '../../components';
 import { ERROR } from '../../constants/error';
+import { userRoleAccess } from '../../bff/utilities';
 
 const PostContainer = ({ className }) => {
 	const dispatch = useDispatch();
@@ -26,6 +28,7 @@ const PostContainer = ({ className }) => {
 	const requestServer = useServerRequest();
 	const post = useSelector(selectPost);
 	const navigate = useNavigate();
+	const userRole = useSelector(selectUserRole);
 	const [error, setError] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -35,6 +38,8 @@ const PostContainer = ({ className }) => {
 
 	useEffect(() => {
 		if (isCreating) {
+			setIsLoading(true);
+			setError(false);
 			return;
 		}
 		dispatch(loadPostAsync(params.id, requestServer)).then((postData) => {
@@ -73,14 +78,15 @@ const PostContainer = ({ className }) => {
 			{error ? (
 				<Error error={ERROR.PAGE_NOT_EXIST} />
 			) : (
-				// <div>1</div>
 				<div className={className}>
 					{isCreating || isEditing ? (
-						<PostForm
-							post={isCreating ? initialPostState : post}
-							onDeletePost={onDeletePost}
-							isCreating={isCreating}
-						/>
+						<Content error={!userRoleAccess(userRole) && ERROR.ACCESS_DENIED}>
+							<PostForm
+								post={isCreating ? initialPostState : post}
+								onDeletePost={onDeletePost}
+								isCreating={isCreating}
+							/>
+						</Content>
 					) : (
 						<>
 							<PostContent post={post} onDeletePost={onDeletePost} />

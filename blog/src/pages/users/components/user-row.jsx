@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Icon } from '../../../components';
 import styled from 'styled-components';
 import { useServerRequest } from '../../../hooks';
+import PropTypes from 'prop-types';
 
 const UserRowContainer = ({ className, user, roles, onDeleteUser }) => {
 	const [selectedRoleId, setSelectedRoleId] = useState(user.roleId);
@@ -73,3 +74,9 @@ export const UserRow = styled(UserRowContainer)`
 		padding: 5px 15px;
 	}
 `;
+
+UserRow.propTypes = {
+	user: PropTypes.string,
+	roles: PropTypes.string,
+	onDeleteUser: PropTypes.func,
+};

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ROLE } from '../../../../../bff/constants';
 import { useServerRequest } from '../../../../../hooks';
 import { openModal, CLOSE_MODAL, removeCommentAsync } from '../../../../../actions';
+import PropTypes from 'prop-types';
 
 const CommentContainer = ({ className, comment }) => {
 	const { id, content, author, publishedAt, postId } = comment;
@@ -40,8 +41,9 @@ const CommentContainer = ({ className, comment }) => {
 				</div>
 				<p>{content}</p>
 			</div>
-			{useRole === ROLE.ADMIN ? (
-				<div>
+
+			<div className="container-icon">
+				{useRole === ROLE.ADMIN ? (
 					<a
 						onClick={() => {
 							onDeleteComment(id, postId);
@@ -49,8 +51,8 @@ const CommentContainer = ({ className, comment }) => {
 					>
 						<Icon id="fa-trash-o" size="24px" margin="0 0 0 0" />
 					</a>
-				</div>
-			) : null}
+				) : null}
+			</div>
 		</li>
 	);
 };
@@ -70,6 +72,11 @@ export const Comment = styled(CommentContainer)`
 		border-radius: 4px;
 		width: 100%;
 	}
+
+	.container-icon {
+		width: 24px;
+	}
+
 	.description {
 		display: flex;
 		justify-content: space-between;
@@ -88,3 +95,7 @@ export const Comment = styled(CommentContainer)`
 		gap: 10px;
 	}
 `;
+
+Comment.propTypes = {
+	comment: PropTypes.object,
+};

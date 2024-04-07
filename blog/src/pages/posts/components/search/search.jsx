@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { Icon, Input } from '../../../../components';
+import PropTypes from 'prop-types';
 
-const SearchContainer = ({ className, searchPhrase, onChange }) => {
+const SearchContainer = ({ className, onChange }) => {
 	return (
 		<div className={className}>
 			<Input className="text" placeholder="Поиск..." onChange={onChange} />
@@ -27,3 +28,7 @@ export const Search = styled(SearchContainer)`
 		left: 90%;
 	}
 `;
+
+Search.propTypes = {
+	onChange: PropTypes.func,
+};

@@ -1,6 +1,7 @@
 import { Icon } from '../../../../components';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const PostsItemContainer = ({ className, post }) => {
 	return (
@@ -46,3 +47,7 @@ export const PostsItem = styled(PostsItemContainer)`
 		gap: 5px;
 	}
 `;
+
+PostsItem.propTypes = {
+	post: PropTypes.object,
+};

@@ -2,6 +2,7 @@ import { Icon, ButtonLink } from '../../../../components';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROLE } from '../../../../bff/constants';
 import { useSelector, useDispatch } from 'react-redux';
+import { userRoleAccess } from '../../../../bff/utilities';
 import {
 	selectUserRole,
 	selectUserLogin,
@@ -14,6 +15,7 @@ const RightAligned = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	height: 43px;
+	min-width: 100px;
 `;
 
 const Login = styled.div`
@@ -30,6 +32,7 @@ const ControlPanelContainer = ({ className }) => {
 	const roleId = useSelector(selectUserRole);
 	const login = useSelector(selectUserLogin);
 	const session = useSelector(selectUserSession);
+	const userRole = useSelector(selectUserRole);
 
 	const onLogout = () => {
 		dispatch(logOut(session));
@@ -59,12 +62,20 @@ const ControlPanelContainer = ({ className }) => {
 						onClick={() => navigate(-1)}
 					/>
 				</a>
-				<Link to="/post">
-					<Icon id="fa-file-text-o" size="24px" margin="10px 0 0 15px" />
-				</Link>
-				<Link to="/users">
-					<Icon id="fa-users" size="24px" margin="10px 0 0 15px" />
-				</Link>
+				{userRoleAccess(userRole) && (
+					<>
+						<Link to="/post">
+							<Icon
+								id="fa-file-text-o"
+								size="24px"
+								margin="10px 0 0 15px"
+							/>
+						</Link>
+						<Link to="/users">
+							<Icon id="fa-users" size="24px" margin="10px 0 0 15px" />
+						</Link>
+					</>
+				)}
 			</RightAligned>
 		</div>
 	);
@@ -72,4 +83,8 @@ const ControlPanelContainer = ({ className }) => {
 
 export const ControlPanel = styled(ControlPanelContainer)`
 	margin: auto 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 `;

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '../../../../components';
 import { Comment } from './components/';
@@ -75,3 +76,8 @@ export const Comments = styled(CommentsContainer)`
 		margin: 0;
 	}
 `;
+
+Comments.propTypes = {
+	comments: PropTypes.array,
+	postId: PropTypes.string,
+};

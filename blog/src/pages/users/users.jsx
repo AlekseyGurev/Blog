@@ -11,10 +11,12 @@ const UsersContainer = ({ className }) => {
 	const [isDeleteUser, setIsDeleteUser] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const requestServer = useServerRequest();
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		Promise.all([requestServer('fetchRoles'), requestServer('fetchUsers')]).then(
 			([rolesRes, usersRes]) => {
+				setIsLoading(true);
 				if (usersRes.error || rolesRes.error) {
 					setErrorMessage(usersRes.error || rolesRes.error);
 					return;
@@ -30,6 +32,10 @@ const UsersContainer = ({ className }) => {
 			setIsDeleteUser(!isDeleteUser);
 		});
 	};
+
+	if (!isLoading) {
+		return;
+	}
 
 	return (
 		<div className={className}>
